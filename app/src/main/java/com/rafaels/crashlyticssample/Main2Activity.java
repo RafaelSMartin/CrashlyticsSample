@@ -18,7 +18,8 @@ public class Main2Activity extends AppCompatActivity {
 //        Para personalizar registro de Crashlytics
 //        Crashlytics.log(Log.DEBUG, TAG, "Pantalla: " + TAG);
 //        Para personalizar claves de Crashlytics
-        Crashlytics.setString("RV"+TAG, "Pantalla: " + TAG);
+        if(!BuildConfig.DEBUG)
+            Crashlytics.setString("RV"+TAG, "Pantalla: " + TAG);
 
         setContentView(R.layout.activity_main2);
 

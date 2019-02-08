@@ -19,10 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        initCrashlyticsNormal();
-        initCrashlyticsManual();
+        initCrashlyticsNormal();
+//        initCrashlyticsManual();
 //        Para personalizar claves de Crashlytics
-        Crashlytics.setString("RV"+TAG, "Pantalla: " + TAG);
+        if(!BuildConfig.DEBUG)
+            Crashlytics.setString("RV"+TAG, "Pantalla: " + TAG);
 
 
         Button crash = findViewById(R.id.button);
@@ -35,14 +36,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCrashlyticsManual() {
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(true)           // Enables Crashlytics debugger
-                .build();
-        Fabric.with(fabric);
+        if(!BuildConfig.DEBUG) {
+            final Fabric fabric = new Fabric.Builder(this)
+                    .kits(new Crashlytics())
+                    .debuggable(true)           // Enables Crashlytics debugger
+                    .build();
+            Fabric.with(fabric);
+        }
     }
 
     private void initCrashlyticsNormal() {
-        Fabric.with(this, new Crashlytics());
+        if(!BuildConfig.DEBUG)
+            Fabric.with(this, new Crashlytics());
     }
 }
